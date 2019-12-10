@@ -1,0 +1,82 @@
+cooldown: 30
+prices:
+  DIRT: 1.0
+items:
+  WOODEN_WAND:
+    Name: '&eWooden Sell-Wand'
+    Type: 'WOODEN_HOE'
+    lore:
+      - '&7Right-click a chest with'
+      - '&7this wand to sell it''s'
+      - '&7contents.'
+    Slimefun-Craftable: true
+    Slimefun-Recipe-Layout: ABACECDBD
+    Slimefun-Recipe-Ingredients:
+      - A, DURALUMIN_INGOT
+      - B, CARBON
+      - C, GOLD_24K
+      - D, STEEL_INGOT
+      - E, BARREL_SMALL
+    Enchanted: false
+    Uses: 300
+  IRON_WAND:
+    Name: '&7Iron Sell-Wand'
+    Type: 'IRON_HOE'
+    Lore:
+      - '&7Right-click a chest with'
+      - '&7this wand to sell it''s'
+      - '&7contents.'
+    Slimefun-Craftable: true
+    Slimefun-Recipe-Layout: BABABABAB
+    Slimefun-Recipe-Ingredients:
+      - A, STEEL_INGOT
+      - B, BLISTERING_INGOT_3
+    Rnchanted: false
+    Uses: 800
+  DIAMOND_WAND:
+    Name: '&bDiamond Sell-Wand'
+    Type: 'DIAMOND_HOE'
+    Lore:
+      - '&7Right-click a chest with'
+      - '&7this wand to sell it''s'
+      - '&7contents.'
+    Slimefun-Craftable: true
+    Slimefun-Recipe-Layout: ABACDCEBE
+    Slimefun-Recipe-Ingredients:
+      - A, HARDENED_METAL_INGOT
+      - B, BARREL_LARGE
+      - C, URANIUM
+      - D, CARBONADO
+      - E, CORINTHIAN_BRONZE_INGOT
+    Rnchanted: false
+    Uses: 1500
+  VOID_WAND:
+    Name: '&5Void Sell-Wand'
+    Type: 'DIAMOND_HOE'
+    Lore:
+      - '&7Right-click a chest with'
+      - '&7this wand to sell it''s'
+      - '&7contents.'
+    Slimefun-Craftable: true
+    Slimefun-Recipe-Layout: ABABCBADA
+    Slimefun-Recipe-Ingredients:
+      - A, BARREL_GIGANTIC
+      - B, REINFORCED_ALLOY_INGOT
+      - C, BEDROCKIUM_BLOCK
+      - D, PLUTONIUM
+    Enchanted: true
+    Uses: -1
+price-multiplier: 1.0
+sale-breakdown: true
+use-blockbreak-check: false
+messages:
+  cooldown: '&cYou must wait %seconds% seconds to sell again.'
+  sale: '&2&lSold all items for &a&l$%amount%&2&l:'
+  sale-breakdown: '&8 * &a%item% (x%amount%) for $%price%.'
+  item-give: '&aGiven %player% a sell wand.'
+  item-receive: '&aReceived a sell wand.'
+  item-use: '&aYour sell wand now has &2%uses% &auses left.'
+  item-use-lore: '&aUses: &2%uses%'
+  item-use-empty: '&cNothing inside the chest is sellable.'
+  item-break: '&cYour sell wand has no more uses left.'
+  no-permission: '&cYou do not have permission to use sell wands.'

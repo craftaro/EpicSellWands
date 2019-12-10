@@ -1,0 +1,15 @@
+name: SellWands
+version: maven-version-number
+description: SellWands
+author: VoidRealms
+main: com.voidrealms.sellwands.SellWands
+depend: [Vault]
+api-version: 1.13
+
+commands:
+  sellwands:
+    description: Give other players sell wands.
+    usage: /sellwands
+  sellwand:
+    description: Give yourself a sell wand.
+    usage: /sellwand
