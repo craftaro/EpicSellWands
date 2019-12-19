@@ -4,6 +4,7 @@ description: SellWands
 author: VoidRealms
 main: com.voidrealms.sellwands.SellWands
 depend: [Vault]
+softdepend: [SlimefunBlocks, Barrels]
 api-version: 1.13
 
 commands:

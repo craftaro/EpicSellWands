@@ -1,6 +1,7 @@
 package com.voidrealms.sellwands.events;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
+import com.songoda.core.compatibility.CompatibleSound;
 import com.songoda.core.hooks.EconomyManager;
 import com.songoda.core.utils.TextUtils;
 import com.voidrealms.sellwands.SellWands;
@@ -132,8 +133,12 @@ public class BlockInteractEvent implements Listener {
                     }
                 }
 
-                wand.use();
-                player.setItemOnCursor(wand.asItemStack());
+                if (wand.use() == 0) {
+                    player.setItemInHand(null);
+                    CompatibleSound.ENTITY_ITEM_BREAK.play(player);
+                } else {
+                    player.setItemInHand(wand.asItemStack());
+                }
 
             } else {
                 System.out.println("[SellWands] Transaction has failed for Inventory Sale (player: "

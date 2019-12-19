@@ -68,7 +68,6 @@ items:
     Uses: -1
 price-multiplier: 1.0
 sale-breakdown: true
-use-blockbreak-check: false
 messages:
   cooldown: '&cYou must wait %seconds% seconds to sell again.'
   sale: '&2&lSold all items for &a&l$%amount%&2&l:'

@@ -83,8 +83,9 @@ public class Wand implements Cloneable {
         return uses;
     }
 
-    public void use() {
-        uses ++;
+    public int use() {
+        uses --;
+        return uses;
     }
 
     public Wand setUses(int uses) {
