@@ -2,7 +2,7 @@
     <groupId>com.voidrealms</groupId>
     <artifactId>SellWands</artifactId>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.0-custom</version>
+    <version>1.0.1-custom</version>
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>SellWands-${project.version}</finalName>
