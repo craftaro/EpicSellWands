@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
-    <groupId>com.voidrealms</groupId>
+    <groupId>com.songoda</groupId>
     <artifactId>SellWands</artifactId>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.1-custom</version>
+    <version>1.0.2</version>
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>SellWands-${project.version}</finalName>
@@ -86,6 +86,10 @@
             <url>http://repo.songoda.com/artifactory/private/</url>
         </repository>
         <repository>
+            <id>public</id>
+            <url>http://repo.songoda.com/artifactory/public/</url>
+        </repository>
+        <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
@@ -108,23 +112,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.TheBusyBiscuit</groupId>
-            <artifactId>Slimefun4</artifactId>
-            <version>v4.1.15</version>
-            <!--<version>8183a1a5</version>-->
-        </dependency>
-        <dependency>
-            <groupId>me.mrCookieSlime</groupId>
-            <artifactId>SlimefunBlocks</artifactId>
-            <version>SlimefunBlocks</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.TheBusyBiscuit</groupId>
-            <artifactId>CS-CoreLib</artifactId>
-            <version>45909a0324</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.zrips</groupId>
             <artifactId>CMI</artifactId>
             <version>8.0.8.1</version>
@@ -133,6 +120,12 @@
             <groupId>net.milkbowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.songoda</groupId>
+            <artifactId>ModdedCore</artifactId>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
