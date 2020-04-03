@@ -1,10 +1,10 @@
-package com.voidrealms.sellwands.wands;
+package com.songoda.sellwands.wands;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.gui.GuiUtils;
 import com.songoda.core.utils.ItemUtils;
 import com.songoda.core.utils.TextUtils;
-import com.voidrealms.sellwands.SellWands;
+import com.songoda.sellwands.SellWands;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -20,7 +20,6 @@ public class Wand implements Cloneable {
     private boolean enchanted = false;
     private int uses = -1;
 
-    private boolean craftable = false;
     private String recipeLayout;
     private List<String> recipeIngredients = new ArrayList<>();
 
@@ -90,15 +89,6 @@ public class Wand implements Cloneable {
 
     public Wand setUses(int uses) {
         this.uses = uses;
-        return this;
-    }
-
-    public boolean isCraftable() {
-        return craftable;
-    }
-
-    public Wand setCraftable(boolean craftable) {
-        this.craftable = craftable;
         return this;
     }
 

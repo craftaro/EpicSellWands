@@ -1,15 +1,15 @@
-package com.voidrealms.sellwands;
+package com.songoda.sellwands;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.hooks.EconomyManager;
-import com.voidrealms.sellwands.commands.SellWandCommand;
-import com.voidrealms.sellwands.commands.SellWandsCommand;
-import com.voidrealms.sellwands.events.BlockInteractEvent;
-import com.voidrealms.sellwands.wands.Wand;
-import com.voidrealms.sellwands.wands.WandManager;
-import me.mrCookieSlime.Slimefun.Lists.Categories;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import com.songoda.moddedcore.ModdedCore;
+import com.songoda.moddedcore.items.ItemManager;
+import com.songoda.moddedcore.items.ModdedItem;
+import com.songoda.sellwands.commands.SellWandCommand;
+import com.songoda.sellwands.commands.SellWandsCommand;
+import com.songoda.sellwands.events.BlockInteractEvent;
+import com.songoda.sellwands.wands.Wand;
+import com.songoda.sellwands.wands.WandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -70,16 +70,16 @@ public class SellWands extends JavaPlugin {
                     .setEnchanted(wand.getBoolean("Enchanted"))
                     .setUses(wand.getInt("Uses"))
 
-                    .setCraftable(wand.getBoolean("Slimefun-Craftable"))
-                    .setRecipeLayout(wand.getString("Slimefun-Recipe-Layout"))
-                    .setRecipeIngredients(wand.getStringList("Slimefun-Recipe-Ingredients")));
+                    .setRecipeLayout(wand.getString("Recipe-Layout"))
+                    .setRecipeIngredients(wand.getStringList("Recipe-Ingredients")));
         }
     }
 
 
     private void setupRecipes() {
+        ModdedCore moddedCore = ModdedCore.getInstance();
+        ItemManager itemManager = moddedCore.getItemManager();
         for (Wand wand : wandManager.getWands()) {
-            if (!wand.isCraftable()) continue;
 
             String recipe = wand.getRecipeLayout();
 
@@ -103,18 +103,18 @@ public class SellWands extends JavaPlugin {
                 String symbol = String.valueOf(recipe.charAt(i));
                 String item = ingredients.get(symbol);
 
-                SlimefunItem slimefunItem = SlimefunItem.getByID(item);
-                if (slimefunItem == null) {
+                ModdedItem moddedItem = itemManager.getItem(item);
+                if (moddedItem == null) {
                     items.add(CompatibleMaterial.getMaterial(item).getItem());
                 } else {
-                    items.add(slimefunItem.getItem());
+                    items.add(moddedItem.asItemStack());
                 }
             }
 
-            System.out.println("[SellWands] Added Slimefun recipe for: " + wand.getKey());
-            new SlimefunItem(Categories.TOOLS, wand.asItemStack(), wand.getKey(), RecipeType.ENHANCED_CRAFTING_TABLE,
-                    items.toArray(new ItemStack[0])).register();
+            System.out.println("[SellWands] Added ModdedCore recipe for: " + wand.getKey());
+            itemManager.addItem(new ModdedItem(this, wand.getKey(), wand.asItemStack(), itemManager.getCategory("TOOLS")));
         }
+        moddedCore.getRecipeManager().loadFromFile(this);
     }
 
     private void cooldown() {

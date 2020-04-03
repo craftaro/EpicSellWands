@@ -1,10 +1,10 @@
 name: SellWands
 version: maven-version-number
 description: SellWands
-author: VoidRealms
-main: com.voidrealms.sellwands.SellWands
+author: Songoda
+main: com.songoda.sellwands.SellWands
 depend: [Vault]
-softdepend: [SlimefunBlocks, Barrels]
+softdepend: [ModdedCore, Barrels]
 api-version: 1.13
 
 commands:

@@ -1,7 +1,7 @@
-package com.voidrealms.sellwands.commands;
+package com.songoda.sellwands.commands;
 
-import com.voidrealms.sellwands.SellWands;
-import com.voidrealms.sellwands.wands.Wand;
+import com.songoda.sellwands.SellWands;
+import com.songoda.sellwands.wands.Wand;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

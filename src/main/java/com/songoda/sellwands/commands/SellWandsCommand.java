@@ -1,4 +1,4 @@
-package com.voidrealms.sellwands.commands;
+package com.songoda.sellwands.commands;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
-import com.voidrealms.sellwands.wands.Wand;
+import com.songoda.sellwands.wands.Wand;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.voidrealms.sellwands.SellWands;
+import com.songoda.sellwands.SellWands;
 import net.md_5.bungee.api.ChatColor;
 
 public class SellWandsCommand implements CommandExecutor {

@@ -1,4 +1,4 @@
-package com.voidrealms.sellwands.wands;
+package com.songoda.sellwands.wands;
 
 import com.songoda.core.utils.TextUtils;
 import org.bukkit.inventory.ItemStack;

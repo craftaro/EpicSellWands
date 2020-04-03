@@ -1,12 +1,12 @@
-package com.voidrealms.sellwands.events;
+package com.songoda.sellwands.events;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.compatibility.CompatibleSound;
 import com.songoda.core.hooks.EconomyManager;
 import com.songoda.core.utils.TextUtils;
-import com.voidrealms.sellwands.SellWands;
-import com.voidrealms.sellwands.commands.SellWandsCommand;
-import com.voidrealms.sellwands.wands.Wand;
+import com.songoda.sellwands.SellWands;
+import com.songoda.sellwands.commands.SellWandsCommand;
+import com.songoda.sellwands.wands.Wand;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;

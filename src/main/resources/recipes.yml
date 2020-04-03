@@ -1,0 +1,21 @@
+1:
+  Result: WOODEN_WAND
+  Pattern: XXAXBXBXX
+  Bench: ALL
+  Ingredients:
+    - A, OAK_WOOD
+    - B, STICK
+2:
+  Result: IRON_WAND
+  Pattern: XXAXBXBXX
+  Bench: ALL
+  Ingredients:
+    - A, BEDROCK
+    - B, STICK
+3:
+  Result: DIAMOND_WAND
+  Pattern: XXAXBXBXX
+  Bench: ALL
+  Ingredients:
+    - A, BEDROCK
+    - B, STICK

@@ -9,14 +9,6 @@ items:
       - '&7Right-click a chest with'
       - '&7this wand to sell it''s'
       - '&7contents.'
-    Slimefun-Craftable: true
-    Slimefun-Recipe-Layout: ABACECDBD
-    Slimefun-Recipe-Ingredients:
-      - A, DURALUMIN_INGOT
-      - B, CARBON
-      - C, GOLD_24K
-      - D, STEEL_INGOT
-      - E, BARREL_SMALL
     Enchanted: false
     Uses: 300
   IRON_WAND:
@@ -26,12 +18,7 @@ items:
       - '&7Right-click a chest with'
       - '&7this wand to sell it''s'
       - '&7contents.'
-    Slimefun-Craftable: true
-    Slimefun-Recipe-Layout: BABABABAB
-    Slimefun-Recipe-Ingredients:
-      - A, STEEL_INGOT
-      - B, BLISTERING_INGOT_3
-    Rnchanted: false
+    Enchanted: false
     Uses: 800
   DIAMOND_WAND:
     Name: '&bDiamond Sell-Wand'
@@ -40,32 +27,8 @@ items:
       - '&7Right-click a chest with'
       - '&7this wand to sell it''s'
       - '&7contents.'
-    Slimefun-Craftable: true
-    Slimefun-Recipe-Layout: ABACDCEBE
-    Slimefun-Recipe-Ingredients:
-      - A, HARDENED_METAL_INGOT
-      - B, BARREL_LARGE
-      - C, URANIUM
-      - D, CARBONADO
-      - E, CORINTHIAN_BRONZE_INGOT
-    Rnchanted: false
-    Uses: 1500
-  VOID_WAND:
-    Name: '&5Void Sell-Wand'
-    Type: 'DIAMOND_HOE'
-    Lore:
-      - '&7Right-click a chest with'
-      - '&7this wand to sell it''s'
-      - '&7contents.'
-    Slimefun-Craftable: true
-    Slimefun-Recipe-Layout: ABABCBADA
-    Slimefun-Recipe-Ingredients:
-      - A, BARREL_GIGANTIC
-      - B, REINFORCED_ALLOY_INGOT
-      - C, BEDROCKIUM_BLOCK
-      - D, PLUTONIUM
     Enchanted: true
-    Uses: -1
+    Uses: 1500
 price-multiplier: 1.0
 sale-breakdown: true
 messages:
