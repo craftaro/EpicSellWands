@@ -1,16 +1,14 @@
-name: SellWands
+name: EpicSellWands
 version: maven-version-number
-description: SellWands
+description: EpicSellWands
 author: Songoda
-main: com.songoda.sellwands.SellWands
+main: com.songoda.epicsellwands.EpicSellWands
 depend: [Vault]
-softdepend: [ModdedCore, Barrels]
+softdepend: [ModdedCore]
 api-version: 1.13
 
 commands:
-  sellwands:
+  esw:
     description: Give other players sell wands.
     usage: /sellwands
-  sellwand:
-    description: Give yourself a sell wand.
-    usage: /sellwand
+    aliases: [EpicSellWands]
