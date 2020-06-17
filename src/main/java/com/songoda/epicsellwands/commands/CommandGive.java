@@ -3,12 +3,9 @@ package com.songoda.epicsellwands.commands;
 import com.songoda.core.commands.AbstractCommand;
 import com.songoda.core.utils.TextUtils;
 import com.songoda.epicsellwands.EpicSellWands;
-import com.songoda.epicsellwands.wands.Wand;
-import com.songoda.ultimatestacker.UltimateStacker;
-import com.songoda.ultimatestacker.utils.Methods;
+import com.songoda.epicsellwands.wand.Wand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,11 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CommandGiveWand extends AbstractCommand {
+public class CommandGive extends AbstractCommand {
 
     EpicSellWands plugin;
 
-    public CommandGiveWand(EpicSellWands plugin) {
+    public CommandGive(EpicSellWands plugin) {
         super(CommandType.CONSOLE_OK, "give");
         this.plugin = plugin;
     }
@@ -43,8 +40,6 @@ public class CommandGiveWand extends AbstractCommand {
             sender.sendMessage(TextUtils.formatText("&6" +
                     plugin.getWandManager().getWands().stream().map(Wand::getKey).collect(Collectors.joining(", "))));
         } else {
-
-            int amt = args.length == 3 ? Integer.parseInt(args[2]) : 1;
             ItemStack itemStack = wand.asItemStack();
             if (!args[0].trim().toLowerCase().equals("all")) {
                 Player player = Bukkit.getOfflinePlayer(args[0]).getPlayer();
@@ -86,7 +81,7 @@ public class CommandGiveWand extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "/esw give <player/all> <type>";
+        return "give <player/all> <wand>";
     }
 
     @Override

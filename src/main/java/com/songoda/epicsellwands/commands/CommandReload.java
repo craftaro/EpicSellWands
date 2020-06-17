@@ -1,24 +1,24 @@
-package com.songoda.ultimatestacker.commands;
+package com.songoda.epicsellwands.commands;
 
 import com.songoda.core.commands.AbstractCommand;
-import com.songoda.ultimatestacker.UltimateStacker;
+import com.songoda.epicsellwands.EpicSellWands;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class  CommandReload extends AbstractCommand {
+public class CommandReload extends AbstractCommand {
 
-    UltimateStacker instance;
+    EpicSellWands plugin;
 
     public CommandReload() {
-        super(false, "reload");
-        instance = UltimateStacker.getInstance();
+        super(CommandType.CONSOLE_OK, "reload");
+        plugin = EpicSellWands.getInstance();
     }
 
     @Override
     protected ReturnType runCommand(CommandSender sender, String... args) {
-        instance.reloadConfig();
-        instance.getLocale().getMessage("&7Configuration and Language files reloaded.").sendPrefixedMessage(sender);
+        plugin.reloadConfig();
+        plugin.getLocale().getMessage("&7Configuration and Language files reloaded.").sendPrefixedMessage(sender);
         return ReturnType.SUCCESS;
     }
 
@@ -29,12 +29,12 @@ public class  CommandReload extends AbstractCommand {
 
     @Override
     public String getPermissionNode() {
-        return "ultimatestacker.admin";
+        return "epicsellwands.admin";
     }
 
     @Override
     public String getSyntax() {
-        return "/us reload";
+        return "reload";
     }
 
     @Override
