@@ -11,14 +11,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Wand implements Cloneable {
 
-    private final String key, name;
-    private final CompatibleMaterial type;
-    private List<String> lore = new ArrayList<>();
+    private String key, name;
+    private CompatibleMaterial type;
+    private List<String> lore = new ArrayList<>(
+            Arrays.asList("&7Right-click a chest with",
+                    "&7this wand to sell it's",
+                    "&7contents."));
     private boolean enchanted = false;
     private int uses = -1;
 
@@ -51,6 +55,18 @@ public class Wand implements Cloneable {
         nbtItem.set("wand", key);
         nbtItem.set("uses", uses);
         return nbtItem.finish();
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(CompatibleMaterial type) {
+        this.type = type;
     }
 
     public String getKey() {
@@ -88,7 +104,7 @@ public class Wand implements Cloneable {
     }
 
     public int use() {
-        uses --;
+        uses--;
         return uses;
     }
 

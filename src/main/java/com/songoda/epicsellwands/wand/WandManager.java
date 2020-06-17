@@ -7,14 +7,11 @@ import com.songoda.core.nms.nbt.NBTItem;
 import com.songoda.core.utils.TextUtils;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class WandManager {
 
-    private static Map<String, Wand> registeredWands = new HashMap<>();
+    private static Map<String, Wand> registeredWands = new LinkedHashMap<>();
     private static Map<CompatibleMaterial, Double> registeredPrices = new HashMap<>();
 
     public Wand addWand(Wand wand) {
@@ -34,6 +31,16 @@ public class WandManager {
         Wand wand = registeredWands.get(nbtItem.getNBTObject("wand").asString()).clone();
         wand.setUses(nbtItem.getNBTObject("uses").asInt());
         return wand;
+    }
+
+    public void removeWand(Wand wand) {
+        registeredWands.remove(wand);
+    }
+
+    public void reKey(String oldKey, String key) {
+        Wand wand = getWand(oldKey);
+        registeredWands.remove(oldKey);
+        registeredWands.put(key, wand);
     }
 
     public void addPrice(CompatibleMaterial material, double price) {
@@ -56,5 +63,4 @@ public class WandManager {
         registeredWands.clear();
         registeredPrices.clear();
     }
-
 }

@@ -6,6 +6,7 @@ import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.configuration.Config;
 import com.songoda.core.gui.GuiManager;
 import com.songoda.core.hooks.EconomyManager;
+import com.songoda.epicsellwands.commands.CommandAdmin;
 import com.songoda.epicsellwands.commands.CommandGive;
 import com.songoda.epicsellwands.commands.CommandReload;
 import com.songoda.epicsellwands.events.BlockInteractEvent;
@@ -18,10 +19,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EpicSellWands extends SongodaPlugin {
 
@@ -46,7 +44,7 @@ public class EpicSellWands extends SongodaPlugin {
 
     @Override
     public void onPluginDisable() {
-
+        saveWands();
     }
 
     @Override
@@ -64,6 +62,7 @@ public class EpicSellWands extends SongodaPlugin {
         // Setup plugin commands
         this.commandManager = new CommandManager(this);
         this.commandManager.addMainCommand("esw")
+                .addSubCommand(new CommandAdmin(this))
                 .addSubCommand(new CommandReload())
                 .addSubCommand(new CommandGive(this));
 
@@ -100,6 +99,28 @@ public class EpicSellWands extends SongodaPlugin {
                     .setRecipeLayout(wand.getString("Recipe-Layout"))
                     .setRecipeIngredients(wand.getStringList("Recipe-Ingredients")));
         }
+    }
+
+    public void saveWands() {
+        // Remove deleted wands.
+        for (String key : wandsConfig.getDefaultSection().getKeys(false)) {
+            if (wandManager.getWands().stream().noneMatch(wand -> wand.getKey().equals(key)))
+                wandsConfig.set(key, null);
+        }
+
+        // Save wands.
+        for (Wand wand : wandManager.getWands()) {
+            String key = wand.getKey();
+            wandsConfig.set(key + ".Name", wand.getName());
+            wandsConfig.set(key + ".Type", wand.getType().name());
+            wandsConfig.set(key + ".Lore", wand.getLore());
+            wandsConfig.set(key + ".Enchanted", wand.isEnchanted());
+            wandsConfig.set(key + ".Uses", wand.getUses());
+
+            wandsConfig.set(key + ".Recipe-Layout", wand.getRecipeLayout());
+            wandsConfig.set(key + ".Recipe-Ingredients", wand.getRecipeIngredients());
+        }
+        wandsConfig.saveChanges();
     }
 
 
@@ -149,12 +170,11 @@ public class EpicSellWands extends SongodaPlugin {
         wandManager.clearData();
         loadPrices();
         loadWands();
-
     }
 
     @Override
     public List<Config> getExtraConfig() {
-        return null;
+        return Arrays.asList(pricesConfig, wandsConfig);
     }
 
     public PlayerManager getPlayerManager() {
@@ -177,5 +197,7 @@ public class EpicSellWands extends SongodaPlugin {
         return wandManager;
     }
 
-
+    public GuiManager getGuiManager() {
+        return guiManager;
+    }
 }
