@@ -1,10 +1,12 @@
-package com.songoda.sellwands.wands;
+package com.songoda.epicsellwands.wand;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.gui.GuiUtils;
+import com.songoda.core.nms.NmsManager;
+import com.songoda.core.nms.nbt.NBTItem;
 import com.songoda.core.utils.ItemUtils;
 import com.songoda.core.utils.TextUtils;
-import com.songoda.sellwands.SellWands;
+import com.songoda.epicsellwands.EpicSellWands;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,22 +32,25 @@ public class Wand implements Cloneable {
     }
 
     public ItemStack asItemStack() {
-        ItemStack item = GuiUtils.createButtonItem(type,
-                TextUtils.convertToInvisibleString("SELLWAND:" + key + ":" + uses + ":") + TextUtils.formatText(name));
+        ItemStack item = GuiUtils.createButtonItem(type, TextUtils.formatText(name));
 
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
         for (String line : this.lore)
             lore.add(TextUtils.formatText(line));
         if (uses != -1)
-            lore.add(TextUtils.formatText(SellWands.getInstance().getConfig().getString("messages.item-use-lore")
-                    .replace("%uses%", Integer.toString(uses))));
+            lore.add(EpicSellWands.getInstance().getLocale().getMessage("general.nametag.uses")
+                    .processPlaceholder("uses", Integer.toString(uses)).getMessage());
         meta.setLore(lore);
         item.setItemMeta(meta);
 
         if (enchanted)
             ItemUtils.addGlow(item);
-        return item;
+
+        NBTItem nbtItem = NmsManager.getNbt().of(item);
+        nbtItem.set("wand", key);
+        nbtItem.set("uses", uses);
+        return nbtItem.finish();
     }
 
     public String getKey() {

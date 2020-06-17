@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <groupId>com.songoda</groupId>
-    <artifactId>SellWands</artifactId>
+    <artifactId>EpicSellWands</artifactId>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.2</version>
+    <version>1</version>
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>SellWands-${project.version}</finalName>
+        <finalName>EpicSellWands-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -108,7 +108,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

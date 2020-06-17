@@ -1,19 +1,22 @@
-package com.songoda.sellwands.events;
+package com.songoda.epicsellwands.events;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.compatibility.CompatibleSound;
 import com.songoda.core.hooks.EconomyManager;
+import com.songoda.core.nms.NmsManager;
+import com.songoda.core.nms.nbt.NBTItem;
 import com.songoda.core.utils.TextUtils;
-import com.songoda.sellwands.SellWands;
-import com.songoda.sellwands.commands.SellWandsCommand;
-import com.songoda.sellwands.wands.Wand;
-import net.milkbowl.vault.economy.EconomyResponse;
+import com.songoda.epicsellwands.EpicSellWands;
+import com.songoda.epicsellwands.player.PlayerManager;
+import com.songoda.epicsellwands.settings.Settings;
+import com.songoda.epicsellwands.wand.Wand;
+import com.songoda.epicsellwands.wand.WandManager;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,55 +24,54 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class BlockInteractEvent implements Listener {
 	
-	private SellWands plugin;	
+	private final EpicSellWands plugin;
+	private final PlayerManager playerManager;
+	private final WandManager wandManager;
 	
-	public BlockInteractEvent(SellWands plugin) {
+	public BlockInteractEvent(EpicSellWands plugin) {
 		this.plugin = plugin;
+		this.playerManager = plugin.getPlayerManager();
+		this.wandManager = plugin.getWandManager();
 	}
-
 	
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if ((event.getAction() != Action.RIGHT_CLICK_BLOCK)
+
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK
                 || !player.getItemInHand().hasItemMeta()
                 || !player.getItemInHand().getItemMeta().hasLore())
             return;
 
         ItemStack wandItem =  player.getItemInHand();
 
-        String name = TextUtils.convertFromInvisibleString(wandItem.getItemMeta().getDisplayName());
-
-        if (!TextUtils.convertFromInvisibleString(name).startsWith("SELLWAND")) return;
+        NBTItem nbtItem = NmsManager.getNbt().of(wandItem);
+        if (!nbtItem.has("wand")) return;
         Wand wand = plugin.getWandManager().getWand(wandItem);
 
         event.setCancelled(true);
+
         Block block = event.getClickedBlock();
         if (block.getType().equals(Material.CHEST) || block.getType().equals(Material.TRAPPED_CHEST)) {
             Chest chest = (Chest) block.getState();
             Inventory inventory = chest.getInventory();
-            if (!player.hasPermission("sellwands.use")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.getConfig().getString("messages.no-permission")));
+
+            if (!player.hasPermission("epicsellwands.use")) {
+                plugin.getLocale().getMessage("event.general.nopermission").sendPrefixedMessage(player);
                 return;
             }
-            if (plugin.playersCooldown.containsKey(player.getName())) {
-                player.sendMessage(ChatColor
-                        .translateAlternateColorCodes('&',
-                                plugin.getConfig().getString("messages.cooldown"))
-                        .replace("%seconds%", "" + plugin.playersCooldown.get(player.getName())));
+
+            if (playerManager.hasActiveCooldown(player)) {
+                plugin.getLocale().getMessage("event.use.cooldown")
+                        .processPlaceholder("seconds",
+                                (playerManager.getActiveCooldown(player) - System.currentTimeMillis()) / 1000).sendPrefixedMessage(player);
                 return;
             }
             int slot = 0;
@@ -90,18 +92,18 @@ public class BlockInteractEvent implements Listener {
                 CompatibleMaterial material = CompatibleMaterial.getMaterial(chestItem);
 
                 // Is this item sellable?
-                if (plugin.prices.containsKey(material)) {
+                if (wandManager.isSellable(material)) {
                     // Get the item price.
-                    double singleSale = plugin.prices.get(material);
+                    double singleSale = wandManager.getPriceFor(material);
 
                     // Remove the item from the inventory.
                     chest.getInventory().setItem(slot, new ItemStack(Material.AIR));
 
-                    // Add the price of this item to the total sale.
-                    totalSale += (singleSale * chestItem.getAmount() * plugin.priceMultiplier);
-
                     // Declare the value of the item.
-                    double itemValue = singleSale * chestItem.getAmount() * plugin.priceMultiplier;
+                    double itemValue = singleSale * chestItem.getAmount() * Settings.PRICE_MULTIPLIER.getDouble();
+
+                    // Add the price of this item to the total sale.
+                    totalSale += itemValue;
 
                     // Add the item to the map.
                     if (items.containsKey(material))
@@ -112,42 +114,44 @@ public class BlockInteractEvent implements Listener {
                 slot++;
             }
             if (items.isEmpty()) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.getConfig().getString("messages.item-use-empty")));
+                plugin.getLocale().getMessage("event.use.empty").sendPrefixedMessage(player);
                 return;
             }
             if (EconomyManager.deposit(player, totalSale)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.sale"))
-                        .replace("%amount%", format.format(totalSale) + ""));
-                if (plugin.getConfig().getBoolean("sale-breakdown")) {
+                plugin.getLocale().getMessage("event.use.sale")
+                        .processPlaceholder("amount", format.format(totalSale)).sendPrefixedMessage(player);
+                if (Settings.SALE_BREAKDOWN.getBoolean()) {
                     for (SoldItem soldItem : items.values()) {
-                        player.sendMessage(ChatColor
-                                .translateAlternateColorCodes('&',
-                                        plugin.getConfig().getString("messages.sale-breakdown"))
-                                .replace("%amount%", String.valueOf(soldItem.getAmount()))
-                                .replace("%item%",
-                                        StringUtils.capitaliseAllWords(
-                                                soldItem.getMaterial().name()
-														.toLowerCase().replace("_", " ")))
-                                .replace("%price%", format.format(soldItem.getTotal())));
+                        plugin.getLocale().getMessage("event.use.breakdown")
+                                .processPlaceholder("amount", soldItem.getAmount())
+                                .processPlaceholder("item", WordUtils
+                                        .capitalizeFully(soldItem.material.name().toLowerCase()
+                                                .replace("_", " ")))
+                                .processPlaceholder("price", format.format(soldItem.getTotal()))
+                                .sendPrefixedMessage(player);
                     }
                 }
 
-                if (wand.use() == 0) {
+                int remainingUses = wand.use();
+                if (remainingUses == 0) {
                     player.setItemInHand(null);
                     CompatibleSound.ENTITY_ITEM_BREAK.play(player);
+                    plugin.getLocale().getMessage("event.use.broken")
+                            .sendPrefixedMessage(player);
                 } else {
                     player.setItemInHand(wand.asItemStack());
+                    plugin.getLocale().getMessage("event.use.left")
+                            .processPlaceholder("uses", remainingUses)
+                            .sendPrefixedMessage(player);
                 }
 
             } else {
-                System.out.println("[SellWands] Transaction has failed for Inventory Sale (player: "
+                System.out.println("[EpicSellWands] Transaction has failed for Inventory Sale (player: "
                         + player.getName() + " amount: " + totalSale + ")");
             }
-            if (plugin.getConfig().getInt("cooldown") > 0) {
-                plugin.playersCooldown.put(player.getName(),
-                        plugin.getConfig().getInt("cooldown"));
-            }
+
+            if (Settings.COOLDOWN.getInt() > 0)
+                playerManager.addNewCooldown(player);
         }
     }
 
@@ -176,12 +180,12 @@ public class BlockInteractEvent implements Listener {
         }
 
         public SoldItem addTotal(double amount) {
-            total += amount;
+            this.total += amount;
             return this;
         }
 
         public SoldItem addAmount(double amount) {
-            amount += amount;
+            this.amount += amount;
             return this;
         }
     }

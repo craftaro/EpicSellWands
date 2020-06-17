@@ -1,0 +1,27 @@
+WOODEN_WAND:
+  Name: '&eWooden Sell-Wand'
+  Type: 'WOODEN_HOE'
+  lore:
+    - '&7Right-click a chest with'
+    - '&7this wand to sell it''s'
+    - '&7contents.'
+  Enchanted: false
+  Uses: 300
+IRON_WAND:
+  Name: '&7Iron Sell-Wand'
+  Type: 'IRON_HOE'
+  Lore:
+    - '&7Right-click a chest with'
+    - '&7this wand to sell it''s'
+    - '&7contents.'
+  Enchanted: false
+  Uses: 800
+DIAMOND_WAND:
+  Name: '&bDiamond Sell-Wand'
+  Type: 'DIAMOND_HOE'
+  Lore:
+    - '&7Right-click a chest with'
+    - '&7this wand to sell it''s'
+    - '&7contents.'
+  Enchanted: true
+  Uses: 1500
