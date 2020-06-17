@@ -3,8 +3,7 @@ version: maven-version-number
 description: EpicSellWands
 author: Songoda
 main: com.songoda.epicsellwands.EpicSellWands
-depend: [Vault]
-softdepend: [ModdedCore]
+softdepend: [Vault, ModdedCore]
 api-version: 1.13
 
 commands:
