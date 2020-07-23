@@ -104,7 +104,8 @@ public class Wand implements Cloneable {
     }
 
     public int use() {
-        uses--;
+        if (uses != -1)
+            uses--;
         return uses;
     }
 

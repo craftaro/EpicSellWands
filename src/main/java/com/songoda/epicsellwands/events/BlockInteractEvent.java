@@ -5,15 +5,12 @@ import com.songoda.core.compatibility.CompatibleSound;
 import com.songoda.core.hooks.EconomyManager;
 import com.songoda.core.nms.NmsManager;
 import com.songoda.core.nms.nbt.NBTItem;
-import com.songoda.core.utils.TextUtils;
 import com.songoda.epicsellwands.EpicSellWands;
 import com.songoda.epicsellwands.player.PlayerManager;
 import com.songoda.epicsellwands.settings.Settings;
 import com.songoda.epicsellwands.wand.Wand;
 import com.songoda.epicsellwands.wand.WandManager;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -30,17 +27,17 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 
 public class BlockInteractEvent implements Listener {
-	
-	private final EpicSellWands plugin;
-	private final PlayerManager playerManager;
-	private final WandManager wandManager;
-	
-	public BlockInteractEvent(EpicSellWands plugin) {
-		this.plugin = plugin;
-		this.playerManager = plugin.getPlayerManager();
-		this.wandManager = plugin.getWandManager();
-	}
-	
+
+    private final EpicSellWands plugin;
+    private final PlayerManager playerManager;
+    private final WandManager wandManager;
+
+    public BlockInteractEvent(EpicSellWands plugin) {
+        this.plugin = plugin;
+        this.playerManager = plugin.getPlayerManager();
+        this.wandManager = plugin.getWandManager();
+    }
+
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -50,7 +47,7 @@ public class BlockInteractEvent implements Listener {
                 || !player.getItemInHand().getItemMeta().hasLore())
             return;
 
-        ItemStack wandItem =  player.getItemInHand();
+        ItemStack wandItem = player.getItemInHand();
 
         NBTItem nbtItem = NmsManager.getNbt().of(wandItem);
         if (!nbtItem.has("wand")) return;
@@ -141,9 +138,10 @@ public class BlockInteractEvent implements Listener {
                             .sendPrefixedMessage(player);
                 } else {
                     player.setItemInHand(wand.asItemStack());
-                    plugin.getLocale().getMessage("event.use.left")
-                            .processPlaceholder("uses", remainingUses)
-                            .sendPrefixedMessage(player);
+                    if (wand.getUses() != -1)
+                        plugin.getLocale().getMessage("event.use.left")
+                                .processPlaceholder("uses", remainingUses)
+                                .sendPrefixedMessage(player);
                 }
 
             } else {
@@ -158,21 +156,21 @@ public class BlockInteractEvent implements Listener {
 
     private static class SoldItem {
 
-		private final CompatibleMaterial material;
+        private final CompatibleMaterial material;
         private int amount;
         private double total;
 
-		public SoldItem(CompatibleMaterial material, int amount, double total) {
-			this.material = material;
-			this.amount = amount;
-			this.total = total;
-		}
+        public SoldItem(CompatibleMaterial material, int amount, double total) {
+            this.material = material;
+            this.amount = amount;
+            this.total = total;
+        }
 
-		public CompatibleMaterial getMaterial() {
-			return material;
-		}
+        public CompatibleMaterial getMaterial() {
+            return material;
+        }
 
-		public int getAmount() {
+        public int getAmount() {
             return amount;
         }
 
