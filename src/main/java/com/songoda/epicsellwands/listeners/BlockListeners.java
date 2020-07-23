@@ -1,4 +1,4 @@
-package com.songoda.epicsellwands.events;
+package com.songoda.epicsellwands.listeners;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.compatibility.CompatibleSound;
@@ -13,8 +13,6 @@ import com.songoda.epicsellwands.wand.WandManager;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,13 +26,13 @@ import org.bukkit.inventory.ItemStack;
 import java.text.NumberFormat;
 import java.util.HashMap;
 
-public class BlockInteractEvent implements Listener {
+public class BlockListeners implements Listener {
 
     private final EpicSellWands plugin;
     private final PlayerManager playerManager;
     private final WandManager wandManager;
 
-    public BlockInteractEvent(EpicSellWands plugin) {
+    public BlockListeners(EpicSellWands plugin) {
         this.plugin = plugin;
         this.playerManager = plugin.getPlayerManager();
         this.wandManager = plugin.getWandManager();
@@ -92,7 +90,6 @@ public class BlockInteractEvent implements Listener {
                 // Get the compatible material for this item.
                 CompatibleMaterial material = CompatibleMaterial.getMaterial(chestItem);
 
-                System.out.println(material);
                 // Is this item sellable?
                 if (wandManager.isSellable(material)) {
                     // Get the item price.

@@ -10,7 +10,7 @@ import com.songoda.core.hooks.EconomyManager;
 import com.songoda.epicsellwands.commands.CommandAdmin;
 import com.songoda.epicsellwands.commands.CommandGive;
 import com.songoda.epicsellwands.commands.CommandReload;
-import com.songoda.epicsellwands.events.BlockInteractEvent;
+import com.songoda.epicsellwands.listeners.BlockListeners;
 import com.songoda.epicsellwands.player.PlayerManager;
 import com.songoda.epicsellwands.settings.Settings;
 import com.songoda.epicsellwands.wand.Wand;
@@ -74,7 +74,7 @@ public class EpicSellWands extends SongodaPlugin {
         this.playerManager = new PlayerManager();
 
         // Load Listeners
-        Bukkit.getPluginManager().registerEvents(new BlockInteractEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new BlockListeners(this), this);
 
         loadWands();
         loadPrices();
