@@ -1,7 +1,7 @@
 WOODEN_WAND:
   Name: '&eWooden Sell-Wand'
   Type: 'WOODEN_HOE'
-  lore:
+  Lore:
     - '&7Right-click a chest with'
     - '&7this wand to sell it''s'
     - '&7contents.'
