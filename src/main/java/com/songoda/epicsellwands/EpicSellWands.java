@@ -1,5 +1,6 @@
 package com.songoda.epicsellwands;
 
+import com.songoda.core.SongodaCore;
 import com.songoda.core.SongodaPlugin;
 import com.songoda.core.commands.CommandManager;
 import com.songoda.core.compatibility.CompatibleMaterial;
@@ -49,6 +50,8 @@ public class EpicSellWands extends SongodaPlugin {
 
     @Override
     public void onPluginEnable() {
+        SongodaCore.registerPlugin(this, 456, CompatibleMaterial.DIAMOND_HOE);
+
         // Load Economy
         EconomyManager.load();
 

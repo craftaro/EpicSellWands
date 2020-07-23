@@ -14,6 +14,7 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
@@ -56,9 +58,11 @@ public class BlockInteractEvent implements Listener {
         event.setCancelled(true);
 
         Block block = event.getClickedBlock();
-        if (block.getType().equals(Material.CHEST) || block.getType().equals(Material.TRAPPED_CHEST)) {
-            Chest chest = (Chest) block.getState();
-            Inventory inventory = chest.getInventory();
+        if ((block.getType().equals(Material.CHEST) || block.getType().equals(Material.TRAPPED_CHEST))
+                && !Settings.ALLOW_ALL_CONTAINERS.getBoolean() || Settings.ALLOW_ALL_CONTAINERS.getBoolean()
+                && block.getState() instanceof InventoryHolder) {
+            InventoryHolder holder = (InventoryHolder) block.getState();
+            Inventory inventory = holder.getInventory();
 
             if (!player.hasPermission("epicsellwands.use")) {
                 plugin.getLocale().getMessage("event.general.nopermission").sendPrefixedMessage(player);
@@ -88,13 +92,14 @@ public class BlockInteractEvent implements Listener {
                 // Get the compatible material for this item.
                 CompatibleMaterial material = CompatibleMaterial.getMaterial(chestItem);
 
+                System.out.println(material);
                 // Is this item sellable?
                 if (wandManager.isSellable(material)) {
                     // Get the item price.
                     double singleSale = wandManager.getPriceFor(material);
 
                     // Remove the item from the inventory.
-                    chest.getInventory().setItem(slot, new ItemStack(Material.AIR));
+                    inventory.setItem(slot, new ItemStack(Material.AIR));
 
                     // Declare the value of the item.
                     double itemValue = singleSale * chestItem.getAmount() * Settings.PRICE_MULTIPLIER.getDouble();

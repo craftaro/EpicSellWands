@@ -21,6 +21,11 @@ public class Settings {
     public static final ConfigSetting SALE_BREAKDOWN = new ConfigSetting(config, "General.Sale Breakdown", true,
             "Should sales be broken down?");
 
+    public static final ConfigSetting ALLOW_ALL_CONTAINERS = new ConfigSetting(config, "General.Allow All Containers", false,
+            "Allow sell wands to be used with all containers.",
+            "Setting this option to false will only allow wands",
+            "to sell the contents of chests.");
+
     public static final ConfigSetting ECONOMY_PLUGIN = new ConfigSetting(config, "Main.Economy", EconomyManager.getEconomy() == null ? "Vault" : EconomyManager.getEconomy().getName(),
             "Which economy plugin should be used?",
             "Supported plugins you have installed: \"" + EconomyManager.getManager().getRegisteredPlugins().stream().collect(Collectors.joining("\", \"")) + "\".");
