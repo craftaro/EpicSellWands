@@ -122,6 +122,7 @@ public class BlockInteractEvent implements Listener {
                         .processPlaceholder("amount", format.format(totalSale)).sendPrefixedMessage(player);
                 if (Settings.SALE_BREAKDOWN.getBoolean()) {
                     for (SoldItem soldItem : items.values()) {
+                        if (soldItem == null || soldItem.material == null) continue;
                         plugin.getLocale().getMessage("event.use.breakdown")
                                 .processPlaceholder("amount", soldItem.getAmount())
                                 .processPlaceholder("item", WordUtils
