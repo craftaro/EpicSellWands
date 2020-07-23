@@ -50,10 +50,10 @@ public class GuiEditWand extends Gui {
 
         setButton(1, 1,
                 GuiUtils.createButtonItem(CompatibleMaterial.BOOK,
-                        TextUtils.formatText("&cEdit Wand Key"),
+                        TextUtils.formatText("&6Edit Wand Key"),
                         "",
-                        "The key is the identifier for this",
-                        "wand and must be unique!"),
+                        TextUtils.formatText("&cThe key is the identifier for this"),
+                        TextUtils.formatText("&cwand and must be unique!")),
                 (event) -> {
                         AnvilGui gui = new AnvilGui(event.player, this);
                         gui.setAction((anvil) -> {
@@ -71,8 +71,8 @@ public class GuiEditWand extends Gui {
 
         setButton(1, 2,
                 GuiUtils.createButtonItem(CompatibleMaterial.WRITTEN_BOOK,
-                        "Left Click to edit the Name",
-                        "Right Click to set Lore"),
+                        TextUtils.formatText("&9Left Click to edit the Name"),
+                        TextUtils.formatText("&8Right Click to set Lore")),
                 (event) -> {
                     if (event.clickType == ClickType.LEFT) {
                         AnvilGui gui = new AnvilGui(event.player, this);
@@ -104,7 +104,7 @@ public class GuiEditWand extends Gui {
                         .createButtonItem(CompatibleMaterial.REDSTONE,
                                 TextUtils.formatText("&bChange allowed use Count"),
                                 "",
-                                TextUtils.formatText("Use -1 for infinite.")),
+                                TextUtils.formatText("&8Use -1 for infinite.")),
                 (event) -> {
                     AnvilGui gui = new AnvilGui(event.player, this);
                     gui.setAction((anvil) -> {
