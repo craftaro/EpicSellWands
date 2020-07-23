@@ -34,7 +34,7 @@ public class WandManager {
     }
 
     public void removeWand(Wand wand) {
-        registeredWands.remove(wand);
+        registeredWands.remove(wand.getKey());
     }
 
     public void reKey(String oldKey, String key) {
