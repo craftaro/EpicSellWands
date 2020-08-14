@@ -25,7 +25,7 @@ public class CommandGive extends AbstractCommand {
 
     @Override
     protected ReturnType runCommand(CommandSender sender, String... args) {
-        if (args.length != 2) return ReturnType.SYNTAX_ERROR;
+        if (args.length > 3 || args.length < 2) return ReturnType.SYNTAX_ERROR;
 
         if (Bukkit.getPlayer(args[0]) == null && !args[0].trim().toLowerCase().equals("all")) {
             sender.sendMessage(args[0] + " is not a player...");
@@ -33,25 +33,36 @@ public class CommandGive extends AbstractCommand {
         }
 
         Wand wand = plugin.getWandManager().getWands().stream()
-                .filter(w -> w.getKey().equals(args[1])).findFirst().orElse(null);
+                .filter(w -> w.getKey().equals(args[1].toUpperCase())).findFirst().orElse(null);
 
         if (wand == null) {
             plugin.getLocale().newMessage("&7The wand &6" + args[1] + " &7does not exist. Try one of these:").sendPrefixedMessage(sender);
             sender.sendMessage(TextUtils.formatText("&6" +
-                    plugin.getWandManager().getWands().stream().map(Wand::getKey).collect(Collectors.joining(", "))));
+                    plugin.getWandManager().getWands().stream().map(w -> w.getKey().toLowerCase()).collect(Collectors.joining(", "))));
         } else {
+            if (args.length == 3) {
+                try {
+                    Integer.parseInt(args[2]);
+                } catch (NumberFormatException ex) {
+                    plugin.getLocale().newMessage("&7The number &6" + args[2] + " &7is in fact not a number at all...").sendPrefixedMessage(sender);
+                    return ReturnType.FAILURE;
+                }
+            }
+            int amount = args.length == 3 ? Integer.parseInt(args[2]) : 1;
             ItemStack itemStack = wand.asItemStack();
             if (!args[0].trim().toLowerCase().equals("all")) {
                 Player player = Bukkit.getOfflinePlayer(args[0]).getPlayer();
-                player.getInventory().addItem(itemStack);
+                for (int i = 0; i < amount; i++)
+                    player.getInventory().addItem(itemStack);
                 plugin.getLocale().getMessage("command.give.success")
-                        .processPlaceholder("type", wand.getName())
+                        .processPlaceholder("type", TextUtils.formatText(wand.getName()))
                         .sendPrefixedMessage(player);
             } else {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.getInventory().addItem(itemStack);
+                    for (int i = 0; i < amount; i++)
+                        player.getInventory().addItem(itemStack);
                     plugin.getLocale().getMessage("command.give.success")
-                            .processPlaceholder("type", wand.getName())
+                            .processPlaceholder("type", TextUtils.formatText(wand.getName()))
                             .sendPrefixedMessage(player);
                 }
             }
@@ -67,7 +78,7 @@ public class CommandGive extends AbstractCommand {
             players.addAll(Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()));
             return players;
         } else if (args.length == 2) {
-            return plugin.getWandManager().getWands().stream().map(Wand::getKey).collect(Collectors.toList());
+            return plugin.getWandManager().getWands().stream().map(w -> w.getKey().toLowerCase()).collect(Collectors.toList());
         } else if (args.length == 3) {
             return Arrays.asList("1", "2", "3", "4", "5");
         }
@@ -81,7 +92,7 @@ public class CommandGive extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "give <player/all> <wand>";
+        return "give <player/all> <wand> [amount]";
     }
 
     @Override
