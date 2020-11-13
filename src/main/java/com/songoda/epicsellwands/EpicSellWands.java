@@ -76,9 +76,12 @@ public class EpicSellWands extends SongodaPlugin {
         // Load Listeners
         Bukkit.getPluginManager().registerEvents(new BlockListeners(this), this);
 
+    }
+    @Override
+    public void onDataLoad() {
         loadWands();
         loadPrices();
-
+        
         if (Bukkit.getPluginManager().isPluginEnabled("ModdedCore"))
             setupRecipes();
     }
