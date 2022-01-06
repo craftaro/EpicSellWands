@@ -165,7 +165,7 @@ public class EpicSellWands extends SongodaPlugin {
                 }
             }
 
-            System.out.println("[EpicSellWands] Added ModdedCore recipe for: " + wand.getKey());
+            getLogger().info("[EpicSellWands] Added ModdedCore recipe for: " + wand.getKey());
             itemManager.addItem(new com.songoda.moddedcore.items.ModdedItem(this, wand.getKey(), wand.asItemStack(), itemManager.getCategory("TOOLS")));
         }
         moddedCore.getRecipeManager().loadFromFile(this);

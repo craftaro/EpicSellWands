@@ -147,7 +147,7 @@ public class BlockListeners implements Listener {
                 }
 
             } else {
-                System.out.println("[EpicSellWands] Transaction has failed for Inventory Sale (player: "
+                plugin.getLogger().info("[EpicSellWands] Transaction has failed for Inventory Sale (player: "
                         + player.getName() + " amount: " + totalSale + ")");
             }
 
