@@ -36,7 +36,7 @@ public class GuiEditWand extends Gui {
                         "&8Click to set the material to",
                         "&8the material in your hand.")
                 )), (event) -> {
-            ItemStack stack = event.player.getInventory().getItemInMainHand();
+            ItemStack stack = event.player.getInventory().getItemInHand();
             wand.setType(CompatibleMaterial.getMaterial(stack));
             paint();
         });

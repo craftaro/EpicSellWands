@@ -62,6 +62,12 @@ public class BlockListeners implements Listener {
             InventoryHolder holder = (InventoryHolder) block.getState();
             Inventory inventory = holder.getInventory();
 
+            if (!EconomyManager.isEnabled()) {
+                player.sendMessage("§cEconomy plugin is missing");
+                this.plugin.getLogger().warning("A player tried using a wand but economy is not available!");
+                return;
+            }
+
             if (!player.hasPermission("epicsellwands.use")) {
                 plugin.getLocale().getMessage("event.general.nopermission").sendPrefixedMessage(player);
                 return;
@@ -145,9 +151,8 @@ public class BlockListeners implements Listener {
                                 .processPlaceholder("uses", remainingUses)
                                 .sendPrefixedMessage(player);
                 }
-
             } else {
-                System.out.println("[EpicSellWands] Transaction has failed for Inventory Sale (player: "
+                this.plugin.getLogger().info("Transaction has failed for Inventory Sale (player: "
                         + player.getName() + " amount: " + totalSale + ")");
             }
 
