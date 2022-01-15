@@ -81,7 +81,7 @@ public class EpicSellWands extends SongodaPlugin {
     public void onDataLoad() {
         loadWands();
         loadPrices();
-        
+
         if (Bukkit.getPluginManager().isPluginEnabled("ModdedCore"))
             setupRecipes();
     }
@@ -165,7 +165,7 @@ public class EpicSellWands extends SongodaPlugin {
                 }
             }
 
-            getLogger().info("[EpicSellWands] Added ModdedCore recipe for: " + wand.getKey());
+            getLogger().info("Added ModdedCore recipe for: " + wand.getKey());
             itemManager.addItem(new com.songoda.moddedcore.items.ModdedItem(this, wand.getKey(), wand.asItemStack(), itemManager.getCategory("TOOLS")));
         }
         moddedCore.getRecipeManager().loadFromFile(this);

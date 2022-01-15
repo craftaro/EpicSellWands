@@ -22,7 +22,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import sun.security.action.GetLongAction;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -152,9 +151,8 @@ public class BlockListeners implements Listener {
                                 .processPlaceholder("uses", remainingUses)
                                 .sendPrefixedMessage(player);
                 }
-
             } else {
-                plugin.getLogger().info("[EpicSellWands] Transaction has failed for Inventory Sale (player: "
+                this.plugin.getLogger().info("Transaction has failed for Inventory Sale (player: "
                         + player.getName() + " amount: " + totalSale + ")");
             }
 
