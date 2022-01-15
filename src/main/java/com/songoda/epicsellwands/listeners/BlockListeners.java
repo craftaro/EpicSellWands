@@ -22,6 +22,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import sun.security.action.GetLongAction;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -61,6 +62,12 @@ public class BlockListeners implements Listener {
                 && block.getState() instanceof InventoryHolder) {
             InventoryHolder holder = (InventoryHolder) block.getState();
             Inventory inventory = holder.getInventory();
+
+            if (!EconomyManager.isEnabled()) {
+                player.sendMessage("§cEconomy plugin is missing");
+                this.plugin.getLogger().warning("A player tried using a wand but economy is not available!");
+                return;
+            }
 
             if (!player.hasPermission("epicsellwands.use")) {
                 plugin.getLocale().getMessage("event.general.nopermission").sendPrefixedMessage(player);
