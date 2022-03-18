@@ -2,8 +2,7 @@ package com.songoda.epicsellwands.wand;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.gui.GuiUtils;
-import com.songoda.core.nms.NmsManager;
-import com.songoda.core.nms.nbt.NBTItem;
+import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.songoda.core.utils.ItemUtils;
 import com.songoda.core.utils.TextUtils;
 import com.songoda.epicsellwands.EpicSellWands;
@@ -51,10 +50,10 @@ public class Wand implements Cloneable {
         if (enchanted)
             ItemUtils.addGlow(item);
 
-        NBTItem nbtItem = NmsManager.getNbt().of(item);
-        nbtItem.set("wand", key);
-        nbtItem.set("uses", uses);
-        return nbtItem.finish();
+        NBTItem nbtItem = new NBTItem(item);
+        nbtItem.setString("wand", key);
+        nbtItem.setInteger("uses", uses);
+        return nbtItem.getItem();
     }
 
     public void setKey(String key) {
