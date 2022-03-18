@@ -71,7 +71,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.songoda.core</pattern>
-                                    <shadedPattern>${project.groupId}.sellwands.core</shadedPattern>
+                                    <shadedPattern>${project.groupId}.epicsellwands.core</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
