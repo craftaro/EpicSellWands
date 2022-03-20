@@ -2,7 +2,7 @@
     <groupId>com.songoda</groupId>
     <artifactId>EpicSellWands</artifactId>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>EpicSellWands-${project.version}</finalName>
@@ -71,7 +71,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.songoda.core</pattern>
-                                    <shadedPattern>${project.groupId}.sellwands.core</shadedPattern>
+                                    <shadedPattern>${project.groupId}.epicsellwands.core</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>com.songoda</groupId>
             <artifactId>SongodaCore</artifactId>
-            <version>2.6.11</version>
+            <version>2.6.12</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

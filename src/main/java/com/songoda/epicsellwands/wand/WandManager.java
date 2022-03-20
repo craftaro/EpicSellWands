@@ -1,16 +1,16 @@
 package com.songoda.epicsellwands.wand;
 
 import com.songoda.core.compatibility.CompatibleMaterial;
-import com.songoda.core.nms.NmsManager;
-import com.songoda.core.nms.nbt.NBTCore;
-import com.songoda.core.nms.nbt.NBTItem;
-import com.songoda.core.utils.TextUtils;
+import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class WandManager {
-
     private static Map<String, Wand> registeredWands = new LinkedHashMap<>();
     private static Map<CompatibleMaterial, Double> registeredPrices = new HashMap<>();
 
@@ -24,12 +24,11 @@ public class WandManager {
     }
 
     public Wand getWand(ItemStack wandItem) {
-        NBTItem nbtItem = NmsManager.getNbt().of(wandItem);
-        if (!nbtItem.has("wand"))
-            return null;
+        NBTItem nbtItem = new NBTItem(wandItem);
+        if (!nbtItem.hasKey("wand")) return null;
 
-        Wand wand = registeredWands.get(nbtItem.getNBTObject("wand").asString()).clone();
-        wand.setUses(nbtItem.getNBTObject("uses").asInt());
+        Wand wand = registeredWands.get(nbtItem.getString("wand")).clone();
+        wand.setUses(nbtItem.getInteger("uses"));
         return wand;
     }
 

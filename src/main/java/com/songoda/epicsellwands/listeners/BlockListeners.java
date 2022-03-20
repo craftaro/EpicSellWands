@@ -3,8 +3,7 @@ package com.songoda.epicsellwands.listeners;
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.compatibility.CompatibleSound;
 import com.songoda.core.hooks.EconomyManager;
-import com.songoda.core.nms.NmsManager;
-import com.songoda.core.nms.nbt.NBTItem;
+import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.songoda.epicsellwands.EpicSellWands;
 import com.songoda.epicsellwands.player.PlayerManager;
 import com.songoda.epicsellwands.settings.Settings;
@@ -49,8 +48,7 @@ public class BlockListeners implements Listener {
 
         ItemStack wandItem = player.getItemInHand();
 
-        NBTItem nbtItem = NmsManager.getNbt().of(wandItem);
-        if (!nbtItem.has("wand")) return;
+        if (!new NBTItem(wandItem).hasKey("wand")) return;
         Wand wand = plugin.getWandManager().getWand(wandItem);
 
         event.setCancelled(true);
