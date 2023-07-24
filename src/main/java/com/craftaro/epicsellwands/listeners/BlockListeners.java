@@ -1,14 +1,14 @@
-package com.songoda.epicsellwands.listeners;
+package com.craftaro.epicsellwands.listeners;
 
-import com.songoda.core.compatibility.CompatibleMaterial;
-import com.songoda.core.compatibility.CompatibleSound;
-import com.songoda.core.hooks.EconomyManager;
-import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
-import com.songoda.epicsellwands.EpicSellWands;
-import com.songoda.epicsellwands.player.PlayerManager;
-import com.songoda.epicsellwands.settings.Settings;
-import com.songoda.epicsellwands.wand.Wand;
-import com.songoda.epicsellwands.wand.WandManager;
+import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.epicsellwands.player.PlayerManager;
+import com.craftaro.epicsellwands.wand.Wand;
+import com.craftaro.epicsellwands.wand.WandManager;
+import com.craftaro.core.compatibility.CompatibleSound;
+import com.craftaro.core.hooks.EconomyManager;
+import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
+import com.craftaro.epicsellwands.EpicSellWands;
+import com.craftaro.epicsellwands.settings.Settings;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -83,7 +83,7 @@ public class BlockListeners implements Listener {
             format.setGroupingUsed(true);
 
             // Items that we are selling.
-            HashMap<CompatibleMaterial, SoldItem> items = new HashMap<>();
+            HashMap<XMaterial, SoldItem> items = new HashMap<>();
 
             // Loop through all the inventory items.
             for (ItemStack chestItem : inventory) {
@@ -92,7 +92,7 @@ public class BlockListeners implements Listener {
                     continue;
                 }
                 // Get the compatible material for this item.
-                CompatibleMaterial material = CompatibleMaterial.getMaterial(chestItem);
+                XMaterial material = XMaterial.matchXMaterial(chestItem);
 
                 // Is this item sellable?
                 if (wandManager.isSellable(material)) {
@@ -161,17 +161,17 @@ public class BlockListeners implements Listener {
 
     private static class SoldItem {
 
-        private final CompatibleMaterial material;
+        private final XMaterial material;
         private int amount;
         private double total;
 
-        public SoldItem(CompatibleMaterial material, int amount, double total) {
+        public SoldItem(XMaterial material, int amount, double total) {
             this.material = material;
             this.amount = amount;
             this.total = total;
         }
 
-        public CompatibleMaterial getMaterial() {
+        public XMaterial getMaterial() {
             return material;
         }
 

@@ -1,7 +1,7 @@
-package com.songoda.epicsellwands.wand;
+package com.craftaro.epicsellwands.wand;
 
-import com.songoda.core.compatibility.CompatibleMaterial;
-import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
+import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class WandManager {
     private static Map<String, Wand> registeredWands = new LinkedHashMap<>();
-    private static Map<CompatibleMaterial, Double> registeredPrices = new HashMap<>();
+    private static Map<XMaterial, Double> registeredPrices = new HashMap<>();
 
     public Wand addWand(Wand wand) {
         registeredWands.put(wand.getKey().toUpperCase(), wand);
@@ -42,15 +42,15 @@ public class WandManager {
         registeredWands.put(key, wand);
     }
 
-    public void addPrice(CompatibleMaterial material, double price) {
+    public void addPrice(XMaterial material, double price) {
         registeredPrices.put(material, price);
     }
 
-    public double getPriceFor(CompatibleMaterial material) {
+    public double getPriceFor(XMaterial material) {
         return registeredPrices.get(material);
     }
 
-    public boolean isSellable(CompatibleMaterial material) {
+    public boolean isSellable(XMaterial material) {
         return registeredPrices.containsKey(material);
     }
 

@@ -1,19 +1,13 @@
-package com.songoda.epicsellwands.commands;
+package com.craftaro.epicsellwands.commands;
 
-import com.songoda.core.commands.AbstractCommand;
-import com.songoda.core.utils.TextUtils;
-import com.songoda.epicsellwands.EpicSellWands;
-import com.songoda.epicsellwands.gui.GuiAdmin;
-import com.songoda.epicsellwands.wand.Wand;
-import org.bukkit.Bukkit;
+import com.craftaro.core.commands.AbstractCommand;
+import com.craftaro.core.utils.TextUtils;
+import com.craftaro.epicsellwands.EpicSellWands;
+import com.craftaro.epicsellwands.gui.GuiAdmin;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CommandAdmin extends AbstractCommand {
 

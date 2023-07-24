@@ -1,9 +1,9 @@
-package com.songoda.epicsellwands.settings;
+package com.craftaro.epicsellwands.settings;
 
-import com.songoda.core.configuration.Config;
-import com.songoda.core.configuration.ConfigSetting;
-import com.songoda.core.hooks.EconomyManager;
-import com.songoda.epicsellwands.EpicSellWands;
+import com.craftaro.core.configuration.Config;
+import com.craftaro.core.configuration.ConfigSetting;
+import com.craftaro.core.hooks.EconomyManager;
+import com.craftaro.epicsellwands.EpicSellWands;
 
 import java.util.stream.Collectors;
 

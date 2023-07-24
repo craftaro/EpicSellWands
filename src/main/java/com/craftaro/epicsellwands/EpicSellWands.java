@@ -1,23 +1,23 @@
-package com.songoda.epicsellwands;
+package com.craftaro.epicsellwands;
 
-import com.songoda.core.SongodaCore;
-import com.songoda.core.SongodaPlugin;
-import com.songoda.core.commands.CommandManager;
-import com.songoda.core.compatibility.CompatibleMaterial;
-import com.songoda.core.configuration.Config;
-import com.songoda.core.gui.GuiManager;
-import com.songoda.core.hooks.EconomyManager;
-import com.songoda.epicsellwands.commands.CommandAdmin;
-import com.songoda.epicsellwands.commands.CommandGive;
-import com.songoda.epicsellwands.commands.CommandReload;
-import com.songoda.epicsellwands.listeners.BlockListeners;
-import com.songoda.epicsellwands.player.PlayerManager;
-import com.songoda.epicsellwands.settings.Settings;
-import com.songoda.epicsellwands.wand.Wand;
-import com.songoda.epicsellwands.wand.WandManager;
+import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.epicsellwands.commands.CommandAdmin;
+import com.craftaro.epicsellwands.commands.CommandGive;
+import com.craftaro.epicsellwands.commands.CommandReload;
+import com.craftaro.epicsellwands.listeners.BlockListeners;
+import com.craftaro.epicsellwands.player.PlayerManager;
+import com.craftaro.epicsellwands.settings.Settings;
+import com.craftaro.epicsellwands.wand.Wand;
+import com.craftaro.epicsellwands.wand.WandManager;
+import com.craftaro.core.SongodaCore;
+import com.craftaro.core.SongodaPlugin;
+import com.craftaro.core.commands.CommandManager;
+import com.craftaro.core.configuration.Config;
+import com.craftaro.core.gui.GuiManager;
+import com.craftaro.core.hooks.EconomyManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.*;
@@ -50,7 +50,7 @@ public class EpicSellWands extends SongodaPlugin {
 
     @Override
     public void onPluginEnable() {
-        SongodaCore.registerPlugin(this, 456, CompatibleMaterial.DIAMOND_HOE);
+        SongodaCore.registerPlugin(this, 456, XMaterial.DIAMOND_HOE);
 
         // Load Economy
         EconomyManager.load();
@@ -81,9 +81,6 @@ public class EpicSellWands extends SongodaPlugin {
     public void onDataLoad() {
         loadWands();
         loadPrices();
-
-        if (Bukkit.getPluginManager().isPluginEnabled("ModdedCore"))
-            setupRecipes();
     }
 
     private void loadWands() {
@@ -97,7 +94,7 @@ public class EpicSellWands extends SongodaPlugin {
             if (wand == null) continue;
 
             wandManager.addWand(new Wand(key, wand.getString("Name"),
-                    CompatibleMaterial.getMaterial(wand.getString("Type")))
+                     XMaterial.matchXMaterial(Material.getMaterial(wand.getString("Type"))))
                     .setLore(wand.getStringList("Lore"))
                     .setEnchanted(wand.getBoolean("Enchanted"))
                     .setUses(wand.getInt("Uses"))
@@ -129,9 +126,9 @@ public class EpicSellWands extends SongodaPlugin {
         wandsConfig.saveChanges();
     }
 
-
+    /* As ModdedCore repo was deleted, this strings now doesn't make any sense
     private void setupRecipes() {
-        com.songoda.moddedcore.ModdedCore moddedCore = com.songoda.moddedcore.ModdedCore.getInstance();
+        com.songoda.moddedcore.ModdedCore moddedCore = com.craftaro.moddedcore.ModdedCore.getInstance();
         com.songoda.moddedcore.items.ItemManager itemManager = moddedCore.getItemManager();
         for (Wand wand : wandManager.getWands()) {
 
@@ -157,7 +154,7 @@ public class EpicSellWands extends SongodaPlugin {
                 String symbol = String.valueOf(recipe.charAt(i));
                 String item = ingredients.get(symbol);
 
-                com.songoda.moddedcore.items.ModdedItem moddedItem = itemManager.getItem(item);
+                com.craftaro.moddedcore.items.ModdedItem moddedItem = itemManager.getItem(item);
                 if (moddedItem == null) {
                     items.add(CompatibleMaterial.getMaterial(item).getItem());
                 } else {
@@ -169,7 +166,7 @@ public class EpicSellWands extends SongodaPlugin {
             itemManager.addItem(new com.songoda.moddedcore.items.ModdedItem(this, wand.getKey(), wand.asItemStack(), itemManager.getCategory("TOOLS")));
         }
         moddedCore.getRecipeManager().loadFromFile(this);
-    }
+    }*/
 
     @Override
     public void onConfigReload() {
@@ -194,7 +191,7 @@ public class EpicSellWands extends SongodaPlugin {
 
         for (String key : pricesConfig.getKeys(false)) {
             double price = pricesConfig.getDouble(key);
-            CompatibleMaterial material = CompatibleMaterial.getMaterial(key);
+            XMaterial material = XMaterial.matchXMaterial(Material.getMaterial(key));
             wandManager.addPrice(material, price);
         }
     }

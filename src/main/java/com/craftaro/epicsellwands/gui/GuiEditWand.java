@@ -1,12 +1,12 @@
-package com.songoda.epicsellwands.gui;
+package com.craftaro.epicsellwands.gui;
 
-import com.songoda.core.compatibility.CompatibleMaterial;
-import com.songoda.core.gui.AnvilGui;
-import com.songoda.core.gui.Gui;
-import com.songoda.core.gui.GuiUtils;
-import com.songoda.core.utils.TextUtils;
-import com.songoda.epicsellwands.EpicSellWands;
-import com.songoda.epicsellwands.wand.Wand;
+import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.epicsellwands.wand.Wand;
+import com.craftaro.core.gui.AnvilGui;
+import com.craftaro.core.gui.Gui;
+import com.craftaro.core.gui.GuiUtils;
+import com.craftaro.core.utils.TextUtils;
+import com.craftaro.epicsellwands.EpicSellWands;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,11 +37,11 @@ public class GuiEditWand extends Gui {
                         "&8the material in your hand.")
                 )), (event) -> {
             ItemStack stack = event.player.getInventory().getItemInHand();
-            wand.setType(CompatibleMaterial.getMaterial(stack));
+            wand.setType(XMaterial.matchXMaterial(stack));
             paint();
         });
 
-        setButton(0,8, GuiUtils.createButtonItem(CompatibleMaterial.OAK_FENCE_GATE,
+        setButton(0,8, GuiUtils.createButtonItem(XMaterial.OAK_FENCE_GATE,
                 TextUtils.formatText("&cBack")),
                 (event) -> {
                     guiManager.showGUI(event.player, returnGui);
@@ -49,7 +49,7 @@ public class GuiEditWand extends Gui {
                 });
 
         setButton(1, 1,
-                GuiUtils.createButtonItem(CompatibleMaterial.BOOK,
+                GuiUtils.createButtonItem(XMaterial.BOOK,
                         TextUtils.formatText("&6Edit Wand Key"),
                         "",
                         TextUtils.formatText("&cThe key is the identifier for this"),
@@ -64,13 +64,13 @@ public class GuiEditWand extends Gui {
                             paint();
                         });
                         gui.setTitle("Edit Key");
-                        gui.setInput(GuiUtils.createButtonItem(CompatibleMaterial.PAPER,
+                        gui.setInput(GuiUtils.createButtonItem(XMaterial.PAPER,
                                 wand.getKey()));
                         guiManager.showGUI(event.player, gui);
                 });
 
         setButton(1, 2,
-                GuiUtils.createButtonItem(CompatibleMaterial.WRITTEN_BOOK,
+                GuiUtils.createButtonItem(XMaterial.WRITTEN_BOOK,
                         TextUtils.formatText("&9Left Click to edit the Name"),
                         TextUtils.formatText("&8Right Click to set Lore")),
                 (event) -> {
@@ -82,7 +82,7 @@ public class GuiEditWand extends Gui {
                             paint();
                         });
                         gui.setTitle("Edit Name");
-                        gui.setInput(GuiUtils.createButtonItem(CompatibleMaterial.PAPER,
+                        gui.setInput(GuiUtils.createButtonItem(XMaterial.PAPER,
                                 wand.getName()));
                         guiManager.showGUI(event.player, gui);
                     } else if (event.clickType == ClickType.RIGHT) {
@@ -93,7 +93,7 @@ public class GuiEditWand extends Gui {
         setItem(1, 4, wand.asItemStack());
 
         setButton(1, 6, GuiUtils
-                        .createButtonItem(CompatibleMaterial.ENCHANTED_BOOK,
+                        .createButtonItem(XMaterial.ENCHANTED_BOOK,
                                 TextUtils.formatText(wand.isEnchanted() ? "&cSet not enchanted" : "&aSet Enchanted")),
                 (event) -> {
                     wand.setEnchanted(!wand.isEnchanted());
@@ -101,7 +101,7 @@ public class GuiEditWand extends Gui {
                 });
 
         setButton(1, 7, GuiUtils
-                        .createButtonItem(CompatibleMaterial.REDSTONE,
+                        .createButtonItem(XMaterial.REDSTONE,
                                 TextUtils.formatText("&bChange allowed use Count"),
                                 "",
                                 TextUtils.formatText("&8Use -1 for infinite.")),
@@ -113,12 +113,12 @@ public class GuiEditWand extends Gui {
                         paint();
                     });
                     gui.setTitle("Edit Allowed Uses");
-                    gui.setInput(GuiUtils.createButtonItem(CompatibleMaterial.PAPER,
+                    gui.setInput(GuiUtils.createButtonItem(XMaterial.PAPER,
                             String.valueOf(wand.getUses())));
                     guiManager.showGUI(event.player, gui);
                 });
 
-        setButton(2, 4, GuiUtils.createButtonItem(CompatibleMaterial.BARRIER,
+        setButton(2, 4, GuiUtils.createButtonItem(XMaterial.BARRIER,
                 TextUtils.formatText("&cDelete"),
                 TextUtils.formatText(Arrays.asList("",
                         "&8This action is irreversible!")

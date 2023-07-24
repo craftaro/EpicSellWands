@@ -1,11 +1,11 @@
-package com.songoda.epicsellwands.wand;
+package com.craftaro.epicsellwands.wand;
 
-import com.songoda.core.compatibility.CompatibleMaterial;
-import com.songoda.core.gui.GuiUtils;
-import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
-import com.songoda.core.utils.ItemUtils;
-import com.songoda.core.utils.TextUtils;
-import com.songoda.epicsellwands.EpicSellWands;
+import com.craftaro.core.gui.GuiUtils;
+import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
+import com.craftaro.core.utils.ItemUtils;
+import com.craftaro.core.utils.TextUtils;
+import com.craftaro.epicsellwands.EpicSellWands;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class Wand implements Cloneable {
 
     private String key, name;
-    private CompatibleMaterial type;
+    private XMaterial type;
     private List<String> lore = new ArrayList<>(
             Arrays.asList("&7Right-click a chest with",
                     "&7this wand to sell it's",
@@ -28,7 +28,7 @@ public class Wand implements Cloneable {
     private String recipeLayout;
     private List<String> recipeIngredients = new ArrayList<>();
 
-    public Wand(String key, String name, CompatibleMaterial type) {
+    public Wand(String key, String name, XMaterial type) {
         this.key = key;
         this.name = name;
         this.type = type;
@@ -64,7 +64,7 @@ public class Wand implements Cloneable {
         this.name = name;
     }
 
-    public void setType(CompatibleMaterial type) {
+    public void setType(XMaterial type) {
         this.type = type;
     }
 
@@ -76,9 +76,7 @@ public class Wand implements Cloneable {
         return name;
     }
 
-    public CompatibleMaterial getType() {
-        return type;
-    }
+    public XMaterial getType() { return type; }
 
     public List<String> getLore() {
         return Collections.unmodifiableList(lore);
