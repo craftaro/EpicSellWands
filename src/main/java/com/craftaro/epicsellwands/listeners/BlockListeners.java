@@ -1,10 +1,10 @@
 package com.craftaro.epicsellwands.listeners;
 
 import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.core.third_party.com.cryptomorin.xseries.XSound;
 import com.craftaro.epicsellwands.player.PlayerManager;
 import com.craftaro.epicsellwands.wand.Wand;
 import com.craftaro.epicsellwands.wand.WandManager;
-import com.craftaro.core.compatibility.CompatibleSound;
 import com.craftaro.core.hooks.EconomyManager;
 import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.craftaro.epicsellwands.EpicSellWands;
@@ -139,7 +139,7 @@ public class BlockListeners implements Listener {
                 int remainingUses = wand.use();
                 if (remainingUses == 0) {
                     player.setItemInHand(null);
-                    CompatibleSound.ENTITY_ITEM_BREAK.play(player);
+                    XSound.ENTITY_ITEM_BREAK.play(player);
                     plugin.getLocale().getMessage("event.use.broken")
                             .sendPrefixedMessage(player);
                 } else {
