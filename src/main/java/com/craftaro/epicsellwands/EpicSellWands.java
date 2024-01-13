@@ -1,6 +1,7 @@
 package com.craftaro.epicsellwands;
 
-import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.core.dependency.Dependency;
+import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.epicsellwands.commands.CommandAdmin;
 import com.craftaro.epicsellwands.commands.CommandGive;
 import com.craftaro.epicsellwands.commands.CommandReload;
@@ -36,6 +37,11 @@ public class EpicSellWands extends SongodaPlugin {
 
     public static EpicSellWands getInstance() {
         return INSTANCE;
+    }
+
+    @Override
+    protected Set<Dependency> getDependencies() {
+        return new HashSet<>();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.craftaro.epicsellwands.gui;
 
-import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.epicsellwands.wand.Wand;
 import com.craftaro.core.gui.Gui;
 import com.craftaro.core.gui.GuiUtils;

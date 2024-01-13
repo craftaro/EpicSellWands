@@ -1,7 +1,7 @@
 package com.craftaro.epicsellwands.listeners;
 
-import com.craftaro.core.third_party.com.cryptomorin.xseries.XMaterial;
-import com.craftaro.core.third_party.com.cryptomorin.xseries.XSound;
+import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
 import com.craftaro.epicsellwands.player.PlayerManager;
 import com.craftaro.epicsellwands.wand.Wand;
 import com.craftaro.epicsellwands.wand.WandManager;
