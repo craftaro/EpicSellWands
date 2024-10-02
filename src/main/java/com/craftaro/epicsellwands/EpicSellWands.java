@@ -1,7 +1,11 @@
 package com.craftaro.epicsellwands;
 
-import com.craftaro.core.dependency.Dependency;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
+import com.craftaro.core.SongodaCore;
+import com.craftaro.core.SongodaPlugin;
+import com.craftaro.core.commands.CommandManager;
+import com.craftaro.core.configuration.Config;
+import com.craftaro.core.gui.GuiManager;
+import com.craftaro.core.hooks.EconomyManager;
 import com.craftaro.epicsellwands.commands.CommandAdmin;
 import com.craftaro.epicsellwands.commands.CommandGive;
 import com.craftaro.epicsellwands.commands.CommandReload;
@@ -10,21 +14,16 @@ import com.craftaro.epicsellwands.player.PlayerManager;
 import com.craftaro.epicsellwands.settings.Settings;
 import com.craftaro.epicsellwands.wand.Wand;
 import com.craftaro.epicsellwands.wand.WandManager;
-import com.craftaro.core.SongodaCore;
-import com.craftaro.core.SongodaPlugin;
-import com.craftaro.core.commands.CommandManager;
-import com.craftaro.core.configuration.Config;
-import com.craftaro.core.gui.GuiManager;
-import com.craftaro.core.hooks.EconomyManager;
+import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class EpicSellWands extends SongodaPlugin {
-
     private static EpicSellWands INSTANCE;
 
     private final Config wandsConfig = new Config(this, "wands.yml");
@@ -37,11 +36,6 @@ public class EpicSellWands extends SongodaPlugin {
 
     public static EpicSellWands getInstance() {
         return INSTANCE;
-    }
-
-    @Override
-    protected Set<Dependency> getDependencies() {
-        return new HashSet<>();
     }
 
     @Override
@@ -83,6 +77,7 @@ public class EpicSellWands extends SongodaPlugin {
         Bukkit.getPluginManager().registerEvents(new BlockListeners(this), this);
 
     }
+
     @Override
     public void onDataLoad() {
         loadWands();
@@ -100,7 +95,7 @@ public class EpicSellWands extends SongodaPlugin {
             if (wand == null) continue;
 
             wandManager.addWand(new Wand(key, wand.getString("Name"),
-                     XMaterial.matchXMaterial(Material.getMaterial(wand.getString("Type"))))
+                    XMaterial.matchXMaterial(Material.getMaterial(wand.getString("Type"))))
                     .setLore(wand.getStringList("Lore"))
                     .setEnchanted(wand.getBoolean("Enchanted"))
                     .setUses(wand.getInt("Uses"))

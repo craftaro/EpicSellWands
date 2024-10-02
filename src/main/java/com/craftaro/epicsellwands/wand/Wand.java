@@ -43,7 +43,7 @@ public class Wand implements Cloneable {
             lore.add(TextUtils.formatText(line));
         if (uses != -1)
             lore.add(EpicSellWands.getInstance().getLocale().getMessage("general.nametag.uses")
-                    .processPlaceholder("uses", Integer.toString(uses)).getMessage());
+                    .processPlaceholder("uses", Integer.toString(uses)).toText());
         meta.setLore(lore);
         item.setItemMeta(meta);
 
